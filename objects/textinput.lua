@@ -302,7 +302,8 @@ function newobject:draw()
 		stencilfunc = function() love.graphics.rectangle("fill", x, y, width - 16, height - 16) end
 	end
 	
-	love.graphics.setStencil(stencilfunc)
+	love.graphics.stencil(stencilfunc)
+	love.graphics.setStencilTest(true)
 	
 	if draw then
 		draw(self)
@@ -310,7 +311,7 @@ function newobject:draw()
 		drawfunc(self)
 	end
 	
-	love.graphics.setStencil()
+	love.graphics.setStencilTest(false)
 	
 	for k, v in ipairs(internals) do
 		v:draw()
