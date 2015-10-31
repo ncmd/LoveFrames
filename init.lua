@@ -245,6 +245,17 @@ function loveframes.mousereleased(x, y, button)
 end
 
 --[[---------------------------------------------------------
+	- func: wheelmoved(x, y)
+	- desc: called when the player moves a mouse wheel
+--]]---------------------------------------------------------
+function loveframes.wheelmoved(x, y)
+
+	local base = loveframes.base
+	base:wheelmoved(x, y)
+
+end
+
+--[[---------------------------------------------------------
 	- func: keypressed(key, isrepeat)
 	- desc: called when the player presses a key
 --]]---------------------------------------------------------

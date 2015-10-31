@@ -168,32 +168,6 @@ function newobject:mousepressed(x, y, button)
 		end
 	end
 	
-	local bar = false 
-	if self.vbar and self.hbar then
-		bar = self:GetVerticalScrollBody():GetScrollBar()
-	elseif self.vbar and not self.hbar then
-		bar = self:GetVerticalScrollBody():GetScrollBar()
-	elseif not self.var and self.hbar then
-		bar = self:GetHorizontalScrollBody():GetScrollBar()
-	end
-	
-	if self:IsTopList() and bar then
-		if self.dtscrolling then
-			local dt = love.timer.getDelta()
-			if button == "wu" then
-				bar:Scroll(-scrollamount * dt)
-			elseif button == "wd" then
-				bar:Scroll(scrollamount * dt)
-			end
-		else
-			if button == "wu" then
-				bar:Scroll(-scrollamount)
-			elseif button == "wd" then
-				bar:Scroll(scrollamount)
-			end
-		end
-	end
-	
 	for k, v in ipairs(self.internals) do
 		v:mousepressed(x, y, button)
 	end
@@ -219,6 +193,41 @@ function newobject:mousereleased(x, y, button)
 	
 	for k, v in ipairs(children) do
 		v:mousereleased(x, y, button)
+	end
+
+end
+
+--[[---------------------------------------------------------
+	- func: wheelmoved(x, y)
+	- desc: called when the player moves a mouse wheel
+--]]---------------------------------------------------------
+function newobject:wheelmoved(x, y)
+
+	local scrollamount = self.mousewheelscrollamount
+
+	if self.hover and button == 1 then
+		local baseparent = self:GetBaseParent()
+		if baseparent and baseparent.type == "frame" then
+			baseparent:MakeTop()
+		end
+	end
+
+	local bar = false
+	if self.vbar and self.hbar then
+		bar = self:GetVerticalScrollBody():GetScrollBar()
+	elseif self.vbar and not self.hbar then
+		bar = self:GetVerticalScrollBody():GetScrollBar()
+	elseif not self.vbar and self.hbar then
+		bar = self:GetHorizontalScrollBody():GetScrollBar()
+	end
+
+	if self:IsTopList() and bar then
+		if self.dtscrolling then
+			local dt = love.timer.getDelta()
+			bar:Scroll(-y * scrollamount * dt)
+		else
+			bar:Scroll(-y * scrollamount)
+		end
 	end
 
 end

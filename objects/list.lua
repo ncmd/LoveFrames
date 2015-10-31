@@ -203,11 +203,7 @@ function newobject:mousepressed(x, y, button)
 		return
 	end
 	
-	local toplist = self:IsTopList()
 	local hover = self.hover
-	local vbar = self.vbar
-	local hbar = self.hbar
-	local scrollamount = self.mousewheelscrollamount
 	local children = self.children
 	local internals = self.internals
 	
@@ -218,33 +214,36 @@ function newobject:mousepressed(x, y, button)
 		end
 	end
 	
-	if vbar or hbar then
-		if toplist then
-			local bar = self:GetScrollBar()
-			local dtscrolling = self.dtscrolling
-			if dtscrolling then
-				local dt = love.timer.getDelta()
-				if button == "wu" then
-					bar:Scroll(-scrollamount * dt)
-				elseif button == "wd" then
-					bar:Scroll(scrollamount * dt)
-				end
-			else
-				if button == "wu" then
-					bar:Scroll(-scrollamount)
-				elseif button == "wd" then
-					bar:Scroll(scrollamount)
-				end
-			end
-		end
-	end
-	
 	for k, v in ipairs(internals) do
 		v:mousepressed(x, y, button)
 	end
 	
 	for k, v in ipairs(children) do
 		v:mousepressed(x, y, button)
+	end
+
+end
+
+--[[---------------------------------------------------------
+	- func: wheelmoved(x, y)
+	- desc: called when the player moves a mouse wheel
+--]]---------------------------------------------------------
+function newobject:wheelmoved(x, y)
+
+	local toplist = self:IsTopList()
+	local vbar = self.vbar
+	local hbar = self.hbar
+	local scrollamount = self.mousewheelscrollamount
+
+	if (vbar or hbar) and toplist then
+		local bar = self:GetScrollBar()
+		local dtscrolling = self.dtscrolling
+		if dtscrolling then
+			local dt = love.timer.getDelta()
+			bar:Scroll(-y * scrollamount * dt)
+		else
+			bar:Scroll(-y * scrollamount)
+		end
 	end
 
 end
