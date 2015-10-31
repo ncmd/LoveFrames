@@ -161,7 +161,7 @@ function newobject:mousepressed(x, y, button)
 
 	local scrollamount = self.mousewheelscrollamount
 	
-	if self.hover and button == "l" then
+	if self.hover and button == 1 then
 		local baseparent = self:GetBaseParent()
 		if baseparent and baseparent.type == "frame" then
 			baseparent:MakeTop()

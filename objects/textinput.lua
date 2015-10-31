@@ -354,7 +354,7 @@ function newobject:mousepressed(x, y, button)
 	local inputobject = loveframes.inputobject
 	
 	if hover then
-		if button == "l" then
+		if button == 1 then
 			if inputobject ~= self then
 				loveframes.inputobject = self
 			end

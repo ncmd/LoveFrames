@@ -215,7 +215,7 @@ function newobject:mousepressed(x, y, button)
 	local children = self.children
 	local scrollamount = self.mousewheelscrollamount
 	
-	if not selfcol and self.canremove and button == "l" then
+	if not selfcol and self.canremove and button == 1 then
 		self:Close()
 	end
 	
