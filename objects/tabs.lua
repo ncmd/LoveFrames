@@ -165,7 +165,7 @@ function newobject:draw()
 	end
 	
 	love.graphics.stencil(stencilfunc)
-	love.graphics.setStencilTest(true)
+	love.graphics.setStencilTest("greater", 0)
 	
 	for k, v in ipairs(internals) do
 		local col = loveframes.util.BoundingBox(x + self.buttonareax, v.x, self.y, v.y, self.buttonareawidth, v.width, tabheight, v.height)
@@ -174,7 +174,7 @@ function newobject:draw()
 		end
 	end
 	
-	love.graphics.setStencilTest(false)
+	love.graphics.setStencilTest()
 	
 	if #self.children > 0 then
 		self.children[self.tab]:draw()
