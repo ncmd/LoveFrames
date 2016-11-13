@@ -3,6 +3,8 @@
 	-- Copyright (c) 2012-2014 Kenny Shields --
 --]]------------------------------------------------
 
+local utf8 = require("utf8")
+
 -- get the current require path
 local path = string.sub(..., 1, string.len(...) - string.len(".objects.textinput"))
 local loveframes = require(path .. ".libraries.common")
@@ -884,8 +886,8 @@ function newobject:MoveIndicator(num, exact)
 		self.indicatornum = num
 	end
 	
-	if self.indicatornum > string.len(text) then
-		self.indicatornum = string.len(text)
+	if self.indicatornum > utf8.len(text) then
+		self.indicatornum = utf8.len(text)
 	elseif self.indicatornum < 0 then
 		self.indicatornum = 0
 	end
@@ -939,14 +941,15 @@ function newobject:UpdateIndicator()
 	end
 	
 	local width = 0
-	
-	for i=1, indicatornum do
-		if masked then
-			local char = self.maskchar
-			width = width + font:getWidth(char)
+	if masked then
+		width = font:getWidth(string.rep(self.maskchar,indicatornum))
+	else
+		if indicatornum == 0 then
+			width = 0
+		elseif indicatornum >= utf8.len(text) then
+			width = font:getWidth(text)
 		else
-			local char = text:sub(i, i)
-			width = width + font:getWidth(char)
+			width = font:getWidth(text:sub(1, utf8.offset (text, indicatornum + 1) - 1))
 		end
 	end
 	
@@ -1022,8 +1025,8 @@ function newobject:AddIntoText(t, p)
 	local line = self.line
 	local curline = lines[line]
 	local text = curline
-	local part1 = text:sub(1, p)
-	local part2 = text:sub(p + 1)
+	local part1 = text:sub(1, utf8.offset(text, p + 1) - 1)
+	local part2 = text:sub(utf8.offset(text, p + 1))
 	local new = part1 .. t .. part2
 	
 	return new
@@ -1041,8 +1044,8 @@ function newobject:RemoveFromText(p)
 	local line = self.line
 	local curline = lines[line]
 	local text = curline
-	local part1 = text:sub(1, p - 1)
-	local part2 = text:sub(p + 1)
+	local part1 = text:sub(1, utf8.offset(text, p) - 1)
+	local part2 = text:sub(utf8.offset(text, p + 1))
 	local new = part1 .. part2
 	return new
 	
@@ -1132,8 +1135,10 @@ function newobject:GetTextCollisions(x, y)
 			end
 		end
 	else
-		for i=1, string.len(text) do
-			local char = text:sub(i, i)
+		local i = 0
+		for p, c in utf8.codes(text) do
+			i = i + 1
+			local char = utf8.char(c)
 			local width = 0
 			if masked then
 				local maskchar = self.maskchar
@@ -1154,7 +1159,7 @@ function newobject:GetTextCollisions(x, y)
 				self:MoveIndicator(0, true)
 			end
 			if x > (tx + width) then
-				self:MoveIndicator(string.len(text), true)
+				self:MoveIndicator(utf8.len(text), true)
 			end
 		end
 	end
