@@ -6,7 +6,7 @@
 local utf8 = require("utf8")
 
 -- get the current require path
-local path = string.sub(..., 1, string.len(...) - string.len(".objects.textinput"))
+local path = string.sub(..., 1, utf8.len(...) - utf8.len(".objects.textinput"))
 local loveframes = require(path .. ".libraries.common")
 
 -- textinput object
@@ -610,7 +610,7 @@ function newobject:RunKey(key, istext)
 				if indicatornum == 0 then
 					if line > 1 then
 						self.line = line - 1
-						local numchars = string.len(lines[self.line])
+						local numchars = utf8.len(lines[self.line])
 						self:MoveIndicator(numchars)
 					end
 				else
@@ -628,14 +628,14 @@ function newobject:RunKey(key, istext)
 			if not multiline then
 				self:MoveIndicator(1)
 				local indicatorx = self.indicatorx
-				if indicatorx >= (x + swidth) and indicatornum ~= string.len(text) then
+				if indicatorx >= (x + swidth) and indicatornum ~= utf8.len(text) then
 					local width = font:getWidth(text:sub(indicatornum, indicatornum))
 					self.offsetx = offsetx + width
-				elseif indicatornum == string.len(text) and offsetx ~= ((font:getWidth(text)) - swidth + 10) and font:getWidth(text) + textoffsetx > swidth then
+				elseif indicatornum == utf8.len(text) and offsetx ~= ((font:getWidth(text)) - swidth + 10) and font:getWidth(text) + textoffsetx > swidth then
 					self.offsetx = ((font:getWidth(text)) - swidth + 10)
 				end
 			else
-				if indicatornum == string.len(text) then
+				if indicatornum == utf8.len(text) then
 					if line < numlines then
 						self.line = line + 1
 						self:MoveIndicator(0, true)
@@ -646,7 +646,7 @@ function newobject:RunKey(key, istext)
 			end
 			if alltextselected then
 				self.line = #lines
-				self.indicatornum = string.len(lines[#lines])
+				self.indicatornum = utf8.len(lines[#lines])
 				self.alltextselected = false
 			end
 			return
@@ -654,8 +654,8 @@ function newobject:RunKey(key, istext)
 			if multiline then
 				if line > 1 then
 					self.line = line - 1
-					if indicatornum > string.len(lines[self.line]) then
-						self.indicatornum = string.len(lines[self.line])
+					if indicatornum > utf8.len(lines[self.line]) then
+						self.indicatornum = utf8.len(lines[self.line])
 					end
 				end
 			end
@@ -664,8 +664,8 @@ function newobject:RunKey(key, istext)
 			if multiline then
 				if line < #lines then
 					self.line = line + 1
-					if indicatornum > string.len(lines[self.line]) then
-						self.indicatornum = string.len(lines[self.line])
+					if indicatornum > utf8.len(lines[self.line]) then
+						self.indicatornum = utf8.len(lines[self.line])
 					end
 				end
 			end
@@ -695,12 +695,12 @@ function newobject:RunKey(key, istext)
 						local oldtext = lines[line]
 						table.remove(lines, line)
 						self.line = line - 1
-						if string.len(oldtext) > 0 then
-							newindicatornum = string.len(lines[self.line])
+						if utf8.len(oldtext) > 0 then
+							newindicatornum = utf8.len(lines[self.line])
 							lines[self.line] = lines[self.line] .. oldtext
 							self:MoveIndicator(newindicatornum)
 						else
-							self:MoveIndicator(string.len(lines[self.line]))
+							self:MoveIndicator(utf8.len(lines[self.line]))
 						end
 					end
 				end
@@ -708,9 +708,9 @@ function newobject:RunKey(key, istext)
 				local cwidth = 0
 				if masked then
 					local maskchar = self.maskchar
-					cwidth = font:getWidth(text:sub(string.len(text)):gsub(".", maskchar))
+					cwidth = font:getWidth(text:gsub(".", maskchar))
 				else
-					cwidth = font:getWidth(text:sub(string.len(text)))
+					cwidth = font:getWidth(text)
 				end
 				if self.offsetx > 0 then
 					self.offsetx = self.offsetx - cwidth
@@ -728,13 +728,13 @@ function newobject:RunKey(key, istext)
 				self.alltextselected = false
 				indicatornum = self.indicatornum
 			else
-				if text ~= "" and indicatornum < string.len(text) then
+				if text ~= "" and indicatornum < utf8.len(text) then
 					text = self:RemoveFromText(indicatornum + 1)
 					lines[line] = text
-				elseif indicatornum == string.len(text) and line < #lines then
+				elseif indicatornum == utf8.len(text) and line < #lines then
 					local oldtext = lines[line + 1]
-					if string.len(oldtext) > 0 then
-						newindicatornum = string.len(lines[self.line])
+					if utf8.len(oldtext) > 0 then
+						newindicatornum = utf8.len(lines[self.line])
 						lines[self.line] = lines[self.line] .. oldtext
 					end
 					table.remove(lines, line + 1)
@@ -758,8 +758,8 @@ function newobject:RunKey(key, istext)
 				if indicatornum == 0 then
 					newtext = self.lines[line]
 					self.lines[line] = ""
-				elseif indicatornum > 0 and indicatornum < string.len(self.lines[line]) then
-					newtext = self.lines[line]:sub(indicatornum + 1, string.len(self.lines[line]))
+				elseif indicatornum > 0 and indicatornum < utf8.len(self.lines[line]) then
+					newtext = self.lines[line]:sub(indicatornum + 1, utf8.len(self.lines[line]))
 					self.lines[line] = self.lines[line]:sub(1, indicatornum)
 				end
 				if line ~= #lines then
@@ -781,14 +781,14 @@ function newobject:RunKey(key, istext)
 			end
 			ckey = key
 			self.lines[self.line] = self:AddIntoText(self.tabreplacement, self.indicatornum)
-			self:MoveIndicator(string.len(self.tabreplacement))
+			self:MoveIndicator(utf8.len(self.tabreplacement))
 		end
 	else
 		if not editable then
 			return
 		end
 		-- do not continue if the text limit has been reached or exceeded
-		if string.len(text) >= self.limit and self.limit ~= 0 and not alltextselected then
+		if utf8.len(text) >= self.limit and self.limit ~= 0 and not alltextselected then
 			return
 		end
 		-- check for unusable characters
@@ -823,11 +823,11 @@ function newobject:RunKey(key, istext)
 			lines = self.lines
 			line = self.line
 		end
-		if indicatornum ~= 0 and indicatornum ~= string.len(text) then
+		if indicatornum ~= 0 and indicatornum ~= utf8.len(text) then
 			text = self:AddIntoText(key, indicatornum)
 			lines[line] = text
 			self:MoveIndicator(1)
-		elseif indicatornum == string.len(text) then
+		elseif indicatornum == utf8.len(text) then
 			text = text .. key
 			lines[line] = text
 			self:MoveIndicator(1)
@@ -1098,7 +1098,7 @@ function newobject:GetTextCollisions(x, y)
 			end
 			local line = self.line
 			local curline = lines[line]
-			for i=1, string.len(curline) do
+			for i=1, utf8.len(curline) do
 				local char = text:sub(i, i)
 				local width = 0
 				if masked then
@@ -1118,7 +1118,7 @@ function newobject:GetTextCollisions(x, y)
 					self:MoveIndicator(i - 1, true)
 					break
 				else
-					self.indicatornum = string.len(curline)
+					self.indicatornum = utf8.len(curline)
 				end
 				
 				if x < tx then
@@ -1126,11 +1126,11 @@ function newobject:GetTextCollisions(x, y)
 				end
 				
 				if x > (tx + width) then
-					self:MoveIndicator(string.len(curline), true)
+					self:MoveIndicator(utf8.len(curline), true)
 				end
 			end
 			
-			if string.len(curline) == 0 then
+			if utf8.len(curline) == 0 then
 				self.indicatornum = 0
 			end
 		end
@@ -1389,13 +1389,13 @@ function newobject:SetText(text)
 			self.lines = {""}
 		end
 		self.line = #self.lines
-		self.indicatornum = string.len(self.lines[#self.lines])
+		self.indicatornum = utf8.len(self.lines[#self.lines])
 	else
 		text = text:gsub(string.char(92) .. string.char(110), "")
 		text = text:gsub(string.char(10), "")
 		self.lines = {text}
 		self.line = 1
-		self.indicatornum = string.len(text)
+		self.indicatornum = utf8.len(text)
 	end
 	
 	return self
