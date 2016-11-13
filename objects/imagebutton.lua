@@ -26,6 +26,8 @@ function newobject:initialize()
 	self.image = nil
 	self.imagecolor = {255, 255, 255, 255}
 	self.OnClick = nil
+	self.groupIndex	= 0
+	self.checked = false
 	
 end
 
@@ -182,6 +184,19 @@ function newobject:mousereleased(x, y, button)
 
 	if hover and down and clickable and button == 1 then
 		if enabled then
+			if self.groupIndex ~= 0 then
+				local baseparent = self.parent
+				if baseparent then
+					for k, v in ipairs(baseparent.children) do
+						if v.groupIndex then
+							if v.groupIndex == self.groupIndex then
+								v.checked = false
+							end
+						end
+					end
+				end
+				self.checked = true
+			end
 			if onclick then
 				onclick(self, x, y)
 			end

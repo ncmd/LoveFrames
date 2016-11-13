@@ -29,6 +29,7 @@ function newobject:initialize()
 	self.enabled = true
 	self.internals = {}
 	self.OnChanged = nil
+	self.groupIndex = 0
 	
 end
 
@@ -211,8 +212,20 @@ function newobject:mousereleased(x, y, button)
 	
 	if hover and down and enabled and button == 1 then
 		if checked then
-			self.checked = false
+			if self.groupIndex == 0 then self.checked = false end
 		else
+			if self.groupIndex ~= 0 then
+				local baseparent = self.parent
+				if baseparent then
+					for k, v in ipairs(baseparent.children) do
+						if v.groupIndex then
+							if v.groupIndex == self.groupIndex then
+								v.checked = false
+							end
+						end
+					end
+				end
+			end
 			self.checked = true
 		end
 		if onchanged then
