@@ -43,25 +43,25 @@ function loveframes.debug.draw()
 	if topcol.type == "frame" then
 		for k, v in pairs(topcol.dockzones) do
 			love.graphics.setLineWidth(1)
-			love.graphics.setColor(255, 0, 0, 100)
+			love.graphics.setColor(255/255, 0, 0, 100/255)
 			love.graphics.rectangle("fill", v.x, v.y, v.width, v.height)
-			love.graphics.setColor(255, 0, 0, 255)
+			love.graphics.setColor(255/255, 0, 0, 255/255)
 			love.graphics.rectangle("line", v.x, v.y, v.width, v.height)
 		end
 	end
 	
 	-- outline the object that the mouse is hovering over
-	love.graphics.setColor(255, 204, 51, 255)
+	love.graphics.setColor(255/255, 204/255, 51/255, 255/255)
 	love.graphics.setLineWidth(2)
 	love.graphics.rectangle("line", topcol.x - 1, topcol.y - 1, topcol.width + 2, topcol.height + 2)
 	
 	-- draw main debug box
 	love.graphics.setFont(font)
-	love.graphics.setColor(0, 0, 0, 200)
+	love.graphics.setColor(0, 0, 0, 200/255)
 	love.graphics.rectangle("fill", infox, infoy, 200, 70)
-	love.graphics.setColor(255, 0, 0, 255)
+	love.graphics.setColor(255/255, 0, 0, 255/255)
 	love.graphics.print("Love Frames - Debug (" ..version.. " - " ..stage.. ")", infox + 5, infoy + 5)
-	love.graphics.setColor(255, 255, 255, 255)
+	love.graphics.setColor(255/255, 255/255, 255/255, 255/255)
 	love.graphics.print("LOVE Version: " ..loveversion, infox + 10, infoy + 20)
 	love.graphics.print("FPS: " ..fps, infox + 10, infoy + 30)
 	love.graphics.print("Delta Time: " ..deltatime, infox + 10, infoy + 40)
@@ -69,11 +69,11 @@ function loveframes.debug.draw()
 	
 	-- draw object information if needed
 	if topcol.type ~= "base" then
-		love.graphics.setColor(0, 0, 0, 200)
+		love.graphics.setColor(0, 0, 0, 200/255)
 		love.graphics.rectangle("fill", infox, infoy + 75, 200, 100)
-		love.graphics.setColor(255, 0, 0, 255)
+		love.graphics.setColor(255/255, 0, 0, 255/255)
 		love.graphics.print("Object Information", infox + 5, infoy + 80)
-		love.graphics.setColor(255, 255, 255, 255)
+		love.graphics.setColor(255/255, 255/255, 255/255, 255/255)
 		love.graphics.print("Type: " ..topcol.type, infox + 10, infoy + 95)
 		if topcol.children then
 			love.graphics.print("# of children: " .. #topcol.children, infox + 10, infoy + 105)

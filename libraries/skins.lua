@@ -43,13 +43,13 @@ function loveframes.skins.Register(skin)
 	end
 	
 	local dir = skin.directory or loveframes.config["DIRECTORY"] .. "/skins/" ..name
-	local dircheck = love.filesystem.isDirectory(dir)
+	local dircheck = love.filesystem.getInfo(dir) ~= nil and love.filesystem.getInfo(dir)["type"] == "directory"
 	if not dircheck then
 		loveframes.util.Error("Skin registration error: Could not find a directory for skin '" ..name.. "'.")
 	end
 	
 	local imagedir = skin.imagedir or dir .. "/images"
-	local imagedircheck = love.filesystem.isDirectory(imagedir)
+	local imagedircheck = love.filesystem.getInfo(imagedir) ~= nil and love.filesystem.getInfo(imagedir)["type"] == "directory"
 	if not imagedircheck then
 		loveframes.util.Error("Skin registration error: Could not find an image directory for skin '" ..name.. "'.")
 	end
@@ -188,7 +188,7 @@ function loveframes.skins.ReloadImages(name)
 	if skin and indeximages then
 		local basedir = loveframes.config["DIRECTORY"]
 		local imagedir = skin.imagedir or basedir .. "/skins/" ..name.. "/images"
-		local dircheck = love.filesystem.isDirectory(imagedir)
+		local dircheck = love.filesystem.getInfo(imagedir) ~= nil and love.filesystem.getInfo(imagedir)["type"] == "directory"
 		if dircheck then
 			local images = loveframes.util.GetDirectoryContents(imagedir)
 			for k, v in ipairs(images) do

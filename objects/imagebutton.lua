@@ -24,7 +24,7 @@ function newobject:initialize()
 	self.clickable = true
 	self.enabled = true
 	self.image = nil
-	self.imagecolor = {255, 255, 255, 255}
+	self.imagecolor = {255/255, 255/255, 255/255, 255/255}
 	self.OnClick = nil
 	self.groupIndex	= 0
 	self.checked = false

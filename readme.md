@@ -2,8 +2,7 @@
 
 ## Information
 
-Love Frames is a GUI library for [LÖVE](https://love2d.org/). Information on installation and usage can be found in the [documentation](https://github.com/KennyShields/LoveFrames/wiki). A demo of the library can be found at: https://github.com/KennyShields/LoveFrames-demo
-This fork contains fixes for (yet unreleased) LÖVE 0.10.0.
+Love Frames is a GUI library for [LÖVE](https://love2d.org/).
 
 ## License
 
@@ -18,6 +17,8 @@ Created by Kenny Shields
 - middleclass by kikito - https://github.com/kikito/middleclass
 
 What's new:
+
+Compatible with 11.0
 
 textinput - Unicode support.
 
