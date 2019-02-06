@@ -12,7 +12,7 @@ Love Frames is licensed under the zlib/libpng license. For more information, ple
 
 Created by Kenny Shields
 
-##Third-Party Libraries**
+## Third-Party Libraries
 
 middleclass by kikito - https://github.com/kikito/middleclass
 
