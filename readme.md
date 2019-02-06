@@ -12,29 +12,11 @@ Love Frames is licensed under the zlib/libpng license. For more information, ple
 
 Created by Kenny Shields
 
-**Third-Party Libraries**
+##Third-Party Libraries**
 
-- middleclass by kikito - https://github.com/kikito/middleclass
+middleclass by kikito - https://github.com/kikito/middleclass
 
-What's new:
+## History
 
-Compatible with 11.0
-
-textinput - Unicode support.
-
-Properties:
-
-image.stretch (boolean)
-
-buttom.image (image) -- left aligned image
-
-button.groupIndex (int)
-button.checked (boolean)
-
-imagebutton.groupIndex (int)
-imagebutton.checked (boolean)
-
-checkbox.groupIndex
-
--- Buttons/checkboxes with the same groupIndex behave as group buttons
+[Changelog](https://github.com/linux-man/LoveFrames/blob/master/changelog.txt)
 

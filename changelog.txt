@@ -1,4 +1,24 @@
 ================================================
+Version 11.0 - Alpha (Apr 15 - 2018)
+================================================
+[FIXED] updated to LÖVE 11.0
+
+================================================
+Version 0.10.1 - Alpha (Nov 13 - 2016)
+================================================
+[ADDED] a new property: image.stretch (boolean)
+[ADDED] a new property: button.image (image) -- left aligned image
+[CHANGED] Buttons/Imagebuttons/checkboxes with the same groupIndex behave as group buttons
+[ADDED] new properties: button.groupIndex (int) and button.checked (boolean)
+[ADDED] new properties: imagebutton.groupIndex (int) and imagebutton.checked (boolean)
+[ADDED] a new property: checkbox.groupIndex
+[ADDED] a new function: wheelmoved
+
+[FIXED] textinput - Unicode support
+[FIXED] Update for LÖVE 0.10.1
+[FIXED] Update stencil calls
+
+================================================
 Version 0.10 - Alpha (Release Date TBD)
 ================================================
 [ADDED] a new object: tree
