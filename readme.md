@@ -14,9 +14,12 @@ Created by Kenny Shields
 
 ## Third-Party Libraries
 
-middleclass by kikito - https://github.com/kikito/middleclass
+middleclass - https://github.com/kikito/middleclass
+utf8.lua - https://github.com/Stepets/utf8.lua
+
+tween.lua - https://github.com/kikito/tween.lua (Demo)
 
 ## History
 
-[Changelog](https://github.com/linux-man/LoveFrames/blob/master/changelog.txt)
+[Changelog](https://github.com/linux-man/LoveFrames/blob/master/loveframes/changelog.txt)
 
