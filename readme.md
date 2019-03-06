@@ -15,7 +15,9 @@ Created by Kenny Shields
 ## Third-Party Libraries
 
 middleclass - https://github.com/kikito/middleclass
+
 utf8.lua - https://github.com/Stepets/utf8.lua
+
 
 tween.lua - https://github.com/kikito/tween.lua (Demo)
 
