@@ -360,8 +360,7 @@ end
 --]]---------------------------------------------------------
 function loveframes.IsCtrlDown()
 	if love._os == "OS X" then
-		return love.keyboard.isDown("lmeta") or love.keyboard.isDown("rmeta") or
-			love.keyboard.isDown("lgui") or love.keyboard.isDown("rgui")
+		return love.keyboard.isDown("lgui") or love.keyboard.isDown("rgui")
 	end
 	return love.keyboard.isDown("lctrl") or love.keyboard.isDown("rctrl")
 end
