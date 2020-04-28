@@ -61,7 +61,7 @@ loveframes.collisions = {}
 local dir = loveframes.config["DIRECTORY"] or path
 
 -- replace all "." with "/" in the directory setting
-dir = dir:gsub("\\", "/"):gsub("(%a)%.(%a)", "%1/%2")
+dir = loveframes.utf8.gsub(loveframes.utf8.gsub(dir, "\\", "/"), "(%a)%.(%a)", "%1/%2")
 loveframes.config["DIRECTORY"] = dir
 
 -- enable key repeat

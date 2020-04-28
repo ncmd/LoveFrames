@@ -154,7 +154,7 @@ function newobject:update(dt)
 		for k, v in ipairs(lines) do
 			local linewidth = 0
 			if masked then
-				linewidth = font:getWidth(v:gsub(".", maskchar))
+				linewidth = font:getWidth(loveframes.utf8.gsub(v, ".", maskchar))
 			else
 				linewidth = font:getWidth(v)
 			end
@@ -537,8 +537,8 @@ end
 --]]---------------------------------------------------------
 function newobject:textinput(text)
 
-	if text:find("kp.") then
-		text = text:gsub("kp", "")
+	if loveframes.utf8.find(text, "kp.") then
+		text = loveframes.utf8.gsub(text, "kp", "")
 	end
 		
 	self:RunKey(text, true)
@@ -588,7 +588,7 @@ function newobject:RunKey(key, istext)
 				self:MoveIndicator(-1)
 				local indicatorx = self.indicatorx
 				if indicatorx <= x and indicatornum ~= 0 then
-					local width = font:getWidth(text:sub(indicatornum, indicatornum + 1))
+					local width = font:getWidth(loveframes.utf8.sub(text, indicatornum, indicatornum + 1))
 					self.offsetx = offsetx - width
 				elseif indicatornum == 0 and offsetx ~= 0 then
 					self.offsetx = 0
@@ -616,7 +616,7 @@ function newobject:RunKey(key, istext)
 				self:MoveIndicator(1)
 				local indicatorx = self.indicatorx
 				if indicatorx >= (x + swidth) and indicatornum ~= utf8.len(text) then
-					local width = font:getWidth(text:sub(indicatornum, indicatornum))
+					local width = font:getWidth(loveframes.utf8.sub(text, indicatornum, indicatornum))
 					self.offsetx = offsetx + width
 				elseif indicatornum == utf8.len(text) and offsetx ~= ((font:getWidth(text)) - swidth + 10) and font:getWidth(text) + textoffsetx > swidth then
 					self.offsetx = ((font:getWidth(text)) - swidth + 10)
@@ -695,7 +695,7 @@ function newobject:RunKey(key, istext)
 				local cwidth = 0
 				if masked then
 					local maskchar = self.maskchar
-					cwidth = font:getWidth(text:gsub(".", maskchar))
+					cwidth = font:getWidth(loveframes.utf8.gsub(text, ".", maskchar))
 				else
 					cwidth = font:getWidth(text)
 				end
@@ -747,8 +747,8 @@ function newobject:RunKey(key, istext)
 					newtext = self.lines[line]
 					self.lines[line] = ""
 				elseif indicatornum > 0 and indicatornum < utf8.len(self.lines[line]) then
-					newtext = self.lines[line]:sub(indicatornum + 1, utf8.len(self.lines[line]))
-					self.lines[line] = self.lines[line]:sub(1, indicatornum)
+					newtext = loveframes.utf8.sub(self.lines[line], indicatornum + 1, utf8.len(self.lines[line]))
+					self.lines[line] = loveframes.utf8.sub(self.lines[line], 1, indicatornum)
 				end
 				if line ~= #lines then
 					table.insert(self.lines, line + 1, newtext)
@@ -834,8 +834,8 @@ function newobject:RunKey(key, istext)
 			local cwidth = 0
 			if masked then
 				local maskchar = self.maskchar
-				twidth = font:getWidth(text:gsub(".", maskchar))
-				cwidth = font:getWidth(key:gsub(".", maskchar))
+				twidth = font:getWidth(loveframes.utf8.gsub(text, ".", maskchar))
+				cwidth = font:getWidth(loveframes.utf8.gsub(key, ".", maskchar))
 			else
 				twidth = font:getWidth(text)
 				cwidth = font:getWidth(key)
@@ -937,7 +937,7 @@ function newobject:UpdateIndicator()
 		elseif indicatornum >= utf8.len(text) then
 			width = font:getWidth(text)
 		else
-			width = font:getWidth(text:sub(1, utf8.offset (text, indicatornum + 1) - 1))
+			width = font:getWidth(loveframes.utf8.sub(text, 1, indicatornum))
 		end
 	end
 	
@@ -966,7 +966,7 @@ function newobject:UpdateIndicator()
 				for k, v in ipairs(lines) do
 					local linewidth = 0
 					if self.masked then
-						linewidth = font:getWidth(v:gsub(".", self.maskchar))
+						linewidth = font:getWidth(loveframes.utf8.gsub(v, ".", self.maskchar))
 					else
 						linewidth = font:getWidth(v)
 					end
@@ -1013,8 +1013,8 @@ function newobject:AddIntoText(t, p)
 	local line = self.line
 	local curline = lines[line]
 	local text = curline
-	local part1 = text:sub(1, utf8.offset(text, p + 1) - 1)
-	local part2 = text:sub(utf8.offset(text, p + 1))
+	local part1 = loveframes.utf8.sub(text, 1, p)
+	local part2 = loveframes.utf8.sub(text, p + 1)
 	local new = part1 .. t .. part2
 	
 	return new
@@ -1032,8 +1032,8 @@ function newobject:RemoveFromText(p)
 	local line = self.line
 	local curline = lines[line]
 	local text = curline
-	local part1 = text:sub(1, utf8.offset(text, p) - 1)
-	local part2 = text:sub(utf8.offset(text, p + 1))
+	local part1 = loveframes.utf8.sub(text, 1, p - 1)
+	local part2 = loveframes.utf8.sub(text, p + 1)
 	local new = part1 .. part2
 	return new
 	
@@ -1087,7 +1087,7 @@ function newobject:GetTextCollisions(x, y)
 			local line = self.line
 			local curline = lines[line]
 			for i=1, utf8.len(curline) do
-				local char = text:sub(i, i)
+				local char = loveframes.utf8.sub(text, i, i)
 				local width = 0
 				if masked then
 					local maskchar = self.maskchar
@@ -1365,11 +1365,11 @@ function newobject:SetText(text)
 	local multiline = self.multiline
 	
 	text = tostring(text)
-	text = text:gsub(string.char(9), tabreplacement)
-	text = text:gsub(string.char(13), "")
+	text = loveframes.utf8.gsub(text, string.char(9), tabreplacement)
+	text = loveframes.utf8.gsub(text, string.char(13), "")
 	
 	if multiline then
-		text = text:gsub(string.char(92) .. string.char(110), string.char(10))
+		text = loveframes.utf8.gsub(text, string.char(92) .. string.char(110), string.char(10))
 		local t = loveframes.SplitString(text, string.char(10))
 		if #t > 0 then
 			self.lines = t
@@ -1379,8 +1379,8 @@ function newobject:SetText(text)
 		self.line = #self.lines
 		self.indicatornum = utf8.len(self.lines[#self.lines])
 	else
-		text = text:gsub(string.char(92) .. string.char(110), "")
-		text = text:gsub(string.char(10), "")
+		text = loveframes.utf8.gsub(text, string.char(92) .. string.char(110), "")
+		text = loveframes.utf8.gsub(text, string.char(10), "")
 		self.lines = {text}
 		self.line = 1
 		self.indicatornum = utf8.len(text)
@@ -1899,13 +1899,13 @@ function newobject:Paste()
 	
 	if limit > 0 then
 		local curtext = self:GetText()
-		local curlength = curtext:len()
+		local curlength = utf8.len(curtext)
 		if curlength == limit then
 			return
 		else
 			local inputlimit = limit - curlength
-			if text:len() > inputlimit then
-				text = text:sub(1, inputlimit)
+			if utf8.len(text) > inputlimit then
+				text = loveframes.utf8.sub(text, 1, inputlimit)
 			end
 		end
 	end
@@ -1921,7 +1921,7 @@ function newobject:Paste()
 		end
 	end
 	if #usable > 0 or #unusable > 0 then
-		text = text:gsub(".", charcheck)
+		text = loveframes.utf8.gsub(text, ".", charcheck)
 	end
 	if alltextselected then
 		self:SetText(text)
@@ -1939,17 +1939,17 @@ function newobject:Paste()
 			local numparts = #parts
 			local oldlinedata = {}
 			local line = self.line
-			local first = lines[line]:sub(0, indicatornum)
-			local last = lines[line]:sub(indicatornum + 1)
+			local first = loveframes.utf8.sub(lines[line], 0, indicatornum)
+			local last = loveframes.utf8.sub(lines[line], indicatornum + 1)
 			if numparts > 1 then
 				for i=1, numparts do
-					local part = parts[i]:gsub(string.char(13),  "")
-					part = part:gsub(string.char(9), "    ")
+					local part = loveframes.utf8.gsub(parts[i], string.char(13),  "")
+					part = loveframes.utf8.gsub(part, string.char(9), "    ")
 					if i ~= 1 then
 						table.insert(oldlinedata, lines[line])
 						lines[line] = part
 						if i == numparts then
-							self.indicatornum = part:len()
+							self.indicatornum = utf8.len(part)
 							lines[line] = lines[line] .. last
 							self.line = line
 						end
@@ -1966,10 +1966,10 @@ function newobject:Paste()
 					ontextchanged(self, text)
 				end
 			elseif numparts == 1 then
-				text = text:gsub(string.char(10), " ")
-				text = text:gsub(string.char(13), " ")
-				text = text:gsub(string.char(9), tabreplacement)
-				local length = text:len()
+				text = loveframes.utf8.gsub(text, string.char(10), " ")
+				text = loveframes.utf8.gsub(text, string.char(13), " ")
+				text = loveframes.utf8.gsub(text, string.char(9), tabreplacement)
+				local length = utf8.len(text)
 				local new = first .. text .. last
 				lines[line] = new
 				self.indicatornum = indicatornum + length
@@ -1978,13 +1978,13 @@ function newobject:Paste()
 				end
 			end
 		else
-			text = text:gsub(string.char(10), " ")
-			text = text:gsub(string.char(13), " ")
-			text = text:gsub(string.char(9), tabreplacement)
-			local length = text:len()
+			text = loveframes.utf8.gsub(text, string.char(10), " ")
+			text = loveframes.utf8.gsub(text, string.char(13), " ")
+			text = loveframes.utf8.gsub(text, string.char(9), tabreplacement)
+			local length = utf8.len(text)
 			local linetext = lines[1]
-			local part1 = linetext:sub(1, indicatornum)
-			local part2 = linetext:sub(indicatornum + 1)
+			local part1 = loveframes.utf8.sub(linetext, 1, indicatornum)
+			local part2 = loveframes.utf8.sub(linetext, indicatornum + 1)
 			local new = part1 .. text .. part2
 			lines[1] = new
 			self.indicatornum = indicatornum + length

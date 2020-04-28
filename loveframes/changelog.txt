@@ -1,6 +1,7 @@
 ================================================
 Version 11.3 - Alpha (Apr 28 - 2020)
 ================================================
+[CHANGED] String functions len, sub, gsub, find replaced with utf8 versions
 [ADDED] New properties: skin.controls.smallfont and skin.controls.imagebuttonfont
 
 ================================================

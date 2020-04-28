@@ -253,10 +253,10 @@ function newobject:SetText(t)
 			})
 		elseif dtype == "string" then
 			if self.ignorenewlines then
-				v = v:gsub("\n", " ")
+				v = loveframes.utf8.gsub(v, "\n", " ")
 			end
-			v = v:gsub(string.char(9), "    ")
-			v = v:gsub("\n", " \n ")
+			v = loveframes.utf8.gsub(v, string.char(9), "    ")
+			v = loveframes.utf8.gsub(v, "\n", " \n ")
 			local parts = loveframes.SplitString(v, " ")
 			for i, j in ipairs(parts) do
 				table.insert(self.formattedtext, {
@@ -280,10 +280,10 @@ function newobject:SetText(t)
 			local key = k
 			if width > maxw then
 				table.remove(self.formattedtext, k)
-				for n=1, string.len(data) do	
-					local item = data:sub(n, n)
+				for n=1, loveframes.utf8.len(data) do	
+					local item = loveframes.utf8.sub(data, n, n)
 					local itemw = v.font:getWidth(item)
-					if n ~= string.len(data) then
+					if n ~= loveframes.utf8.len(data) then
 						if (curw + itemw) > maxw then
 							table.insert(inserts, {
 								key = key, 
@@ -353,7 +353,7 @@ function newobject:SetText(t)
 		local text = v.text
 		local color = v.color
 		if detectlinks then
-			if string.len(text) > 7 and (text:sub(1, 7) == "http://" or text:sub(1, 8) == "https://") then
+			if loveframes.utf8.len(text) > 7 and (loveframes.utf8.sub(text, 1, 7) == "http://" or loveframes.utf8.sub(text, 1, 8) == "https://") then
 				v.link = true
 			end
 		end

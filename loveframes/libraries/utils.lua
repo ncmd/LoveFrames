@@ -172,7 +172,7 @@ function loveframes.GetDirectoryContents(dir, t)
 			table.insert(t, {
 				path = dir, 
 				fullpath = dir.. "/" ..v, 
-				requirepath = dir:gsub("/", ".") .. "." ..name, 
+				requirepath = loveframes.utf8.gsub(dir, "/", ".") .. "." ..name, 
 				name = name, 
 				extension = extension
 			})
@@ -213,7 +213,7 @@ function loveframes.SplitString(str, pat)
 	if pat == " " then
 		local fpat = "(.-)" .. pat
 		local last_end = 1
-		local s, e, cap = str:find(fpat, 1)
+		local s, e, cap = loveframes.utf8.find(str, fpat, 1)
 		while s do
 			if s ~= #str then
 				cap = cap .. " "
@@ -222,25 +222,25 @@ function loveframes.SplitString(str, pat)
 				table.insert(t,cap)
 			end
 			last_end = e+1
-			s, e, cap = str:find(fpat, last_end)
+			s, e, cap = loveframes.utf8.find(str, fpat, last_end)
 		end
 		if last_end <= #str then
-			cap = str:sub(last_end)
+			cap = loveframes.utf8.sub(str, last_end)
 			table.insert(t, cap)
 		end
 	else
 		local fpat = "(.-)" .. pat
 		local last_end = 1
-		local s, e, cap = str:find(fpat, 1)
+		local s, e, cap = loveframes.utf8.find(str, fpat, 1)
 		while s do
 			if s ~= 1 or cap ~= "" then
 				table.insert(t,cap)
 			end
 			last_end = e+1
-			s, e, cap = str:find(fpat, last_end)
+			s, e, cap = loveframes.utf8.find(str, fpat, last_end)
 		end
 		if last_end <= #str then
-			cap = str:sub(last_end)
+			cap = loveframes.utf8.sub(str, last_end)
 			table.insert(t, cap)
 		end
 	end

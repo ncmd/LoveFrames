@@ -165,7 +165,7 @@ local function ParseHeaderText(str, hx, hwidth, tx)
 	
 	if (tx + twidth) - hwidth/2 > hx + hwidth then
 		if #str > 1 then
-			return ParseHeaderText(str:sub(1, #str - 1), hx, hwidth, tx, twidth)
+			return ParseHeaderText(loveframes.utf8.sub(str, 1, #str - 1), hx, hwidth, tx, twidth)
 		else
 			return str
 		end
@@ -181,7 +181,7 @@ local function ParseRowText(str, rx, rwidth, tx1, tx2)
 	
 	if (tx1 + tx2) + twidth > rx + rwidth then
 		if #str > 1 then
-			return ParseRowText(str:sub(1, #str - 1), rx, rwidth, tx1, tx2)
+			return ParseRowText(loveframes.utf8.sub(str, 1, #str - 1), rx, rwidth, tx1, tx2)
 		else
 			return str
 		end
@@ -405,8 +405,8 @@ function skin.button(object)
 				local text = object.text
 				local font = skin.controls.button_text_font
 				while font:getWidth(text) > width - object.image:getWidth() - 10 do
-					text =text:sub(2)
-					while text:byte(1, 1) > 127 do text = text:sub(2) end
+					text =loveframes.utf8.sub(text, 2)
+					while text:byte(1, 1) > 127 do text = loveframes.utf8.sub(text, 2) end
 				end
 				skin.PrintText(text, x + object.image:getWidth() + 4, y + height/2 - theight/2)
 			else
@@ -429,8 +429,8 @@ function skin.button(object)
 				local text = object.text
 				local font = skin.controls.button_text_font
 				while font:getWidth(text) > width - object.image:getWidth() - 10 do
-					text =text:sub(2)
-					while text:byte(1, 1) > 127 do text = text:sub(2) end
+					text =loveframes.utf8.sub(text, 2)
+					while text:byte(1, 1) > 127 do text = loveframes.utf8.sub(text, 2) end
 				end
 				skin.PrintText(text, x + object.image:getWidth() + 4, y + height/2 - theight/2)
 			else
@@ -453,8 +453,8 @@ function skin.button(object)
 				local text = object.text
 				local font = skin.controls.button_text_font
 				while font:getWidth(text) > width - object.image:getWidth() - 10 do
-					text =text:sub(2)
-					while text:byte(1, 1) > 127 do text = text:sub(2) end
+					text =loveframes.utf8.sub(text, 2)
+					while text:byte(1, 1) > 127 do text = loveframes.utf8.sub(text, 2) end
 				end
 				skin.PrintText(text, x + object.image:getWidth() + 4, y + height/2 - theight/2)
 			else
@@ -1170,7 +1170,7 @@ function skin.textinput(object)
 			for i=1, #lines do
 				local str = lines[i]
 				if masked then
-					str = str:gsub(".", "*")
+					str = loveframes.utf8.gsub(str, ".", "*")
 				end
 				local twidth = font:getWidth(str)
 				if twidth == 0 then
@@ -1184,7 +1184,7 @@ function skin.textinput(object)
 			local twidth = 0
 			if masked then
 				local maskchar = object:GetMaskChar()
-				twidth = font:getWidth(text:gsub(".", maskchar))
+				twidth = font:getWidth(loveframes.utf8.gsub(text, ".", maskchar))
 			else
 				twidth = font:getWidth(text)
 			end
@@ -1264,7 +1264,7 @@ function skin.textinput(object)
 			str = lines[i]
 			if masked then
 				local maskchar = object:GetMaskChar()
-				str = str:gsub(".", maskchar)
+				str = loveframes.utf8.gsub(str, ".", maskchar)
 			end
 			skin.PrintText(#str > 0 and str or (#lines == 1 and placeholder or ""), textx, texty + theight * i - theight)
 		end
@@ -1272,7 +1272,7 @@ function skin.textinput(object)
 		str = lines[1]
 		if masked then
 			local maskchar = object:GetMaskChar()
-			str = str:gsub(".", maskchar)
+			str = loveframes.utf8.gsub(str, ".", maskchar)
 		end
 		skin.PrintText(#str > 0 and str or placeholder, textx, texty)
 	end
