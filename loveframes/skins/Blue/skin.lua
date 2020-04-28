@@ -14,8 +14,6 @@ skin.name = "Blue"
 skin.author = "Nikolai Resokav"
 skin.version = "1.0"
 
-local smallfont = love.graphics.newFont(10)
-local imagebuttonfont = love.graphics.newFont(15)
 local bordercolor = {0.56, 0.56, 0.56, 1}
 
 -- add skin directives to this table
@@ -23,24 +21,26 @@ skin.directives = {}
 
 -- controls 
 skin.controls = {}
+skin.controls.smallfont = love.graphics.newFont(11)
+skin.controls.imagebuttonfont = love.graphics.newFont(15)
 
 -- frame
 skin.controls.frame_body_color                      = {0.91, 0.91, 0.91, 1}
 skin.controls.frame_name_color                      = {1, 1, 1, 1}
-skin.controls.frame_name_font                       = smallfont
+skin.controls.frame_name_font                       = skin.controls.smallfont
 
 -- button
 skin.controls.button_text_down_color                = {1, 1, 1, 1}
 skin.controls.button_text_nohover_color             = {0, 0, 0, 0.78}
 skin.controls.button_text_hover_color               = {1, 1, 1, 1}
 skin.controls.button_text_nonclickable_color        = {0, 0, 0, 0.39}
-skin.controls.button_text_font                      = smallfont
+skin.controls.button_text_font                      = skin.controls.smallfont
 
 -- imagebutton
 skin.controls.imagebutton_text_down_color           = {1, 1, 1, 1}
 skin.controls.imagebutton_text_nohover_color        = {1, 1, 1, 0.78}
 skin.controls.imagebutton_text_hover_color          = {1, 1, 1, 1}
-skin.controls.imagebutton_text_font                 = imagebuttonfont
+skin.controls.imagebutton_text_font                 = skin.controls.imagebuttonfont
 
 -- closebutton
 skin.controls.closebutton_body_down_color           = {1, 1, 1, 1}
@@ -50,7 +50,7 @@ skin.controls.closebutton_body_hover_color          = {1, 1, 1, 1}
 -- progressbar
 skin.controls.progressbar_body_color                = {1, 1, 1, 1}
 skin.controls.progressbar_text_color                = {0, 0, 0, 1}
-skin.controls.progressbar_text_font                 = smallfont
+skin.controls.progressbar_text_font                 = skin.controls.smallfont
 
 -- list
 skin.controls.list_body_color                       = {0.91, 0.91, 0.91, 1}
@@ -70,12 +70,12 @@ skin.controls.tabpanel_body_color                   = {0.91, 0.91, 0.91, 1}
 -- tabbutton
 skin.controls.tab_text_nohover_color                = {0, 0, 0, 0.78}
 skin.controls.tab_text_hover_color                  = {1, 1, 1, 1}
-skin.controls.tab_text_font                         = smallfont
+skin.controls.tab_text_font                         = skin.controls.smallfont
 
 -- multichoice
 skin.controls.multichoice_body_color                = {0.94, 0.94, 0.94, 1}
 skin.controls.multichoice_text_color                = {0, 0, 0, 1}
-skin.controls.multichoice_text_font                 = smallfont
+skin.controls.multichoice_text_font                 = skin.controls.smallfont
 
 -- multichoicelist
 skin.controls.multichoicelist_body_color            = {0.94, 0.94, 0.94, 0.78}
@@ -85,7 +85,7 @@ skin.controls.multichoicerow_body_nohover_color     = {0.94, 0.94, 0.94, 1}
 skin.controls.multichoicerow_body_hover_color       = {0.2, 0.8, 1, 1}
 skin.controls.multichoicerow_text_nohover_color     = {0, 0, 0, 0.59}
 skin.controls.multichoicerow_text_hover_color       = {1, 1, 1, 1}
-skin.controls.multichoicerow_text_font              = smallfont
+skin.controls.multichoicerow_text_font              = skin.controls.smallfont
 
 -- tooltip
 skin.controls.tooltip_body_color                    = {1, 1, 1, 1}
@@ -104,13 +104,13 @@ skin.controls.slider_bar_outline_color              = {0.86, 0.86, 0.86, 1}
 -- checkbox
 skin.controls.checkbox_body_color                   = {1, 1, 1, 1}
 skin.controls.checkbox_check_color                  = {0.5, 0.8, 1, 1}
-skin.controls.checkbox_text_font                    = smallfont
+skin.controls.checkbox_text_font                    = skin.controls.smallfont
 
 -- radiobutton
 skin.controls.radiobutton_body_color                = {1, 1, 1, 1}
 skin.controls.radiobutton_check_color               = {0.5, 0.8, 1, 1}
 skin.controls.radiobutton_inner_border_color        = {0.3, 0.72, 1, 1}
-skin.controls.radiobutton_text_font                 = smallfont
+skin.controls.radiobutton_text_font                 = skin.controls.smallfont
 
 -- collapsiblecategory
 skin.controls.collapsiblecategory_text_color        = {1, 1, 1, 1}
@@ -125,7 +125,7 @@ skin.controls.columnlistarea_body_color             = {0.91, 0.91, 0.91, 1}
 skin.controls.columnlistheader_text_down_color      = {1, 1, 1, 1}
 skin.controls.columnlistheader_text_nohover_color   = {0, 0, 0, 0.78}
 skin.controls.columnlistheader_text_hover_color     = {1, 1, 1, 1}
-skin.controls.columnlistheader_text_font            = smallfont
+skin.controls.columnlistheader_text_font            = skin.controls.smallfont
 
 -- columnlistrow
 skin.controls.columnlistrow_body1_color             = {0.96, 0.96, 0.96, 1}
@@ -148,7 +148,7 @@ skin.controls.grid_body_color                       = {0.9, 0.9, 0.9, 1}
 
 -- form
 skin.controls.form_text_color                       = {0, 0, 0, 1}
-skin.controls.form_text_font                        = smallfont
+skin.controls.form_text_font                        = skin.controls.smallfont
 
 -- menu
 skin.controls.menu_body_color                       = {1, 1, 1, 1}
@@ -1576,7 +1576,7 @@ function skin.collapsiblecategory(object)
 	local text = object:GetText()
 	local open = object:GetOpen()
 	local textcolor = skin.controls.collapsiblecategory_text_color
-	local font = smallfont
+	local font = skin.controls.smallfont
 	local image = skin.images["button-nohover.png"]
 	local topbarimage = skin.images["frame-topbar.png"]
 	local topbarimage_width = topbarimage:getWidth()
@@ -2003,7 +2003,7 @@ function skin.menuoption(object)
 	local body_hover_color = skin.controls.menuoption_body_hover_color
 	local text_hover_color = skin.controls.menuoption_text_hover_color
 	local text_color = skin.controls.menuoption_text_color
-	local twidth = smallfont:getWidth(text)
+	local twidth = skin.controls.smallfont:getWidth(text)
 	
 	
 	if option_type == "divider" then
@@ -2011,7 +2011,7 @@ function skin.menuoption(object)
 		love.graphics.rectangle("fill", x + 4, y + 2, width - 8, 1)
 		object.contentheight = 10
 	else
-		love.graphics.setFont(smallfont)
+		love.graphics.setFont(skin.controls.smallfont)
 		if hover then
 			love.graphics.setColor(body_hover_color)
 			love.graphics.rectangle("fill", x + 2, y + 2, width - 4, height - 4)

@@ -1,4 +1,9 @@
 ================================================
+Version 11.3 - Alpha (Apr 28 - 2020)
+================================================
+[ADDED] New properties: skin.controls.smallfont and skin.controls.imagebuttonfont
+
+================================================
 Version 11.2 - Alpha (Mar 6 - 2019)
 ================================================
 [ADDED] New functions button.SetImage and button.GetImage

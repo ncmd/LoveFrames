@@ -19,6 +19,7 @@ local color = function(s, a) return {loveframes.Color(s, a)} end
 -- Controls
 skin.controls = {}
 skin.controls.smallfont = love.graphics.newFont(11)
+skin.controls.imagebuttonfont = love.graphics.newFont(15)
 skin.controls.color_image  = color"FFFFFF"
 
 skin.controls.color_back0  = color"f0f0f0"
@@ -343,7 +344,7 @@ function skin.imagebutton(object)
 	local image = object:GetImage()
 	local imagecolor = object.imagecolor or skin.controls.color_image
 	local down = object.down
-	local font = skin.controls.smallfont
+	local font = skin.controls.imagebuttonfont
 	local twidth = font:getWidth(object.text)
 	local theight = font:getHeight(object.text)
 	local checked = object.checked
