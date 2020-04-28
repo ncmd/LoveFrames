@@ -119,10 +119,16 @@ end
 function love.load()
 	local font = love.graphics.newFont(12)
 	love.graphics.setFont(font)
-	
+
 	loveframes = require("loveframes")
 	tween = require("tween")
-	
+
+	-- Change fonts on all registered skins
+	for _, skin in pairs(loveframes.skins) do
+		skin.controls.smallfont = love.graphics.newFont( "resources/FreeSans-LrmZ.ttf", 12)
+		skin.controls.imagebuttonfont = love.graphics.newFont( "resources/FreeSans-LrmZ.ttf", 15)
+	end
+
 	-- table to store available examples
 	demo.examples = {}
 	demo.examples[1] = {category_title = "Object Demonstrations", registered = {}}

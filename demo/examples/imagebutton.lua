@@ -13,6 +13,7 @@ function example.func(loveframes, centerarea)
 	imagebutton:SetImage("resources/magic.png")
 	imagebutton:SetPos(5, 30)
 	imagebutton:SizeToImage()
+	imagebutton:Center()
 	
 end
 

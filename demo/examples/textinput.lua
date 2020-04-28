@@ -17,7 +17,7 @@ function example.func(loveframes, centerarea)
 			object:Clear()
 		end
 	end
-	textinput:SetFont(love.graphics.newFont(12))
+	textinput:SetFont(love.graphics.newFont( "resources/FreeSans-LrmZ.ttf", 12))
 	
 	local togglebutton = loveframes.Create("button", frame)
 	togglebutton:SetPos(5, 60)

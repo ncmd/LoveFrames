@@ -38,6 +38,7 @@ function example.func(loveframes, centerarea)
 	menu:SetVisible(false)
 	
 	frame.menu_example = menu
+	text.menu_example = menu
 	
 end
 
