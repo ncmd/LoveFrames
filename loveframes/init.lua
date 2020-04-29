@@ -27,7 +27,7 @@ loveframes.utf8 = require(path .. ".third-party.utf8")
 
 -- library info
 loveframes.author = "Kenny Shields"
-loveframes.version = "11.2"
+loveframes.version = "11.3"
 loveframes.stage = "Alpha"
 
 -- library configurations
