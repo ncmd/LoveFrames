@@ -6,7 +6,7 @@
 return function(loveframes)
 ---------- module start ----------
 
--- tooltip clas
+-- tooltip class
 local newobject = loveframes.NewObject("tooltip", "loveframes_object_tooltip", true)
 
 --[[---------------------------------------------------------
@@ -34,7 +34,7 @@ function newobject:initialize(object, text)
 	textobject:Remove()
 	textobject.parent = self
 	textobject:SetText(text or "")
-	textobject:SetPos(0, 0)
+	textobject:SetPos(10000, 0) -- textobject interferes with hover detection
 	table.insert(self.internals, textobject)
 	
 	-- apply template properties to the object
@@ -59,15 +59,16 @@ function newobject:update(dt)
 	
 	local visible = self.visible
 	local alwaysupdate = self.alwaysupdate
+	local internals = self.internals
+	local textobject = internals[1]
 	
 	if not visible then
+		textobject:SetPos(10000, 0) -- textobject interferes with hover detection
 		if not alwaysupdate then
 			return
 		end
 	end
 	
-	local internals = self.internals
-	local textobject = internals[1]
 	local padding = self.padding
 	local object = self.object
 	local draworder = self.draworder
