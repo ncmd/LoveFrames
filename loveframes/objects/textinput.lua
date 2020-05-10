@@ -3,8 +3,6 @@
 	-- Copyright (c) 2012-2014 Kenny Shields --
 --]]------------------------------------------------
 
-local utf8 = require("utf8")
-
 return function(loveframes)
 ---------- module start ----------
 
@@ -597,7 +595,7 @@ function newobject:RunKey(key, istext)
 				if indicatornum == 0 then
 					if line > 1 then
 						self.line = line - 1
-						local numchars = utf8.len(lines[self.line])
+						local numchars = loveframes.utf8.len(lines[self.line])
 						self:MoveIndicator(numchars)
 					end
 				else
@@ -615,14 +613,14 @@ function newobject:RunKey(key, istext)
 			if not multiline then
 				self:MoveIndicator(1)
 				local indicatorx = self.indicatorx
-				if indicatorx >= (x + swidth) and indicatornum ~= utf8.len(text) then
+				if indicatorx >= (x + swidth) and indicatornum ~= loveframes.utf8.len(text) then
 					local width = font:getWidth(loveframes.utf8.sub(text, indicatornum, indicatornum))
 					self.offsetx = offsetx + width
-				elseif indicatornum == utf8.len(text) and offsetx ~= ((font:getWidth(text)) - swidth + 10) and font:getWidth(text) + textoffsetx > swidth then
+				elseif indicatornum == loveframes.utf8.len(text) and offsetx ~= ((font:getWidth(text)) - swidth + 10) and font:getWidth(text) + textoffsetx > swidth then
 					self.offsetx = ((font:getWidth(text)) - swidth + 10)
 				end
 			else
-				if indicatornum == utf8.len(text) then
+				if indicatornum == loveframes.utf8.len(text) then
 					if line < numlines then
 						self.line = line + 1
 						self:MoveIndicator(0, true)
@@ -633,7 +631,7 @@ function newobject:RunKey(key, istext)
 			end
 			if alltextselected then
 				self.line = #lines
-				self.indicatornum = utf8.len(lines[#lines])
+				self.indicatornum = loveframes.utf8.len(lines[#lines])
 				self.alltextselected = false
 			end
 			return
@@ -641,8 +639,8 @@ function newobject:RunKey(key, istext)
 			if multiline then
 				if line > 1 then
 					self.line = line - 1
-					if indicatornum > utf8.len(lines[self.line]) then
-						self.indicatornum = utf8.len(lines[self.line])
+					if indicatornum > loveframes.utf8.len(lines[self.line]) then
+						self.indicatornum = loveframes.utf8.len(lines[self.line])
 					end
 				end
 			end
@@ -651,8 +649,8 @@ function newobject:RunKey(key, istext)
 			if multiline then
 				if line < #lines then
 					self.line = line + 1
-					if indicatornum > utf8.len(lines[self.line]) then
-						self.indicatornum = utf8.len(lines[self.line])
+					if indicatornum > loveframes.utf8.len(lines[self.line]) then
+						self.indicatornum = loveframes.utf8.len(lines[self.line])
 					end
 				end
 			end
@@ -682,12 +680,12 @@ function newobject:RunKey(key, istext)
 						local oldtext = lines[line]
 						table.remove(lines, line)
 						self.line = line - 1
-						if utf8.len(oldtext) > 0 then
-							newindicatornum = utf8.len(lines[self.line])
+						if loveframes.utf8.len(oldtext) > 0 then
+							newindicatornum = loveframes.utf8.len(lines[self.line])
 							lines[self.line] = lines[self.line] .. oldtext
 							self:MoveIndicator(newindicatornum)
 						else
-							self:MoveIndicator(utf8.len(lines[self.line]))
+							self:MoveIndicator(loveframes.utf8.len(lines[self.line]))
 						end
 					end
 				end
@@ -715,14 +713,14 @@ function newobject:RunKey(key, istext)
 				self.alltextselected = false
 				indicatornum = self.indicatornum
 			else
-				if text ~= "" and indicatornum < utf8.len(text) then
+				if text ~= "" and indicatornum < loveframes.utf8.len(text) then
 					text = self:RemoveFromText(indicatornum + 1)
 					lines[line] = text
-				elseif indicatornum == utf8.len(text) and line < #lines then
+				elseif indicatornum == loveframes.utf8.len(text) and line < #lines then
 					local oldtext = lines[line + 1]
-					if utf8.len(oldtext) > 0 then
+					if loveframes.utf8.len(oldtext) > 0 then
 						-- FIXME: newindicatornum here???
-						-- newindicatornum = utf8.len(lines[self.line])
+						-- newindicatornum = loveframes.utf8.len(lines[self.line])
 						lines[self.line] = lines[self.line] .. oldtext
 					end
 					table.remove(lines, line + 1)
@@ -746,8 +744,8 @@ function newobject:RunKey(key, istext)
 				if indicatornum == 0 then
 					newtext = self.lines[line]
 					self.lines[line] = ""
-				elseif indicatornum > 0 and indicatornum < utf8.len(self.lines[line]) then
-					newtext = loveframes.utf8.sub(self.lines[line], indicatornum + 1, utf8.len(self.lines[line]))
+				elseif indicatornum > 0 and indicatornum < loveframes.utf8.len(self.lines[line]) then
+					newtext = loveframes.utf8.sub(self.lines[line], indicatornum + 1, loveframes.utf8.len(self.lines[line]))
 					self.lines[line] = loveframes.utf8.sub(self.lines[line], 1, indicatornum)
 				end
 				if line ~= #lines then
@@ -769,14 +767,14 @@ function newobject:RunKey(key, istext)
 			end
 			ckey = key
 			self.lines[self.line] = self:AddIntoText(self.tabreplacement, self.indicatornum)
-			self:MoveIndicator(utf8.len(self.tabreplacement))
+			self:MoveIndicator(loveframes.utf8.len(self.tabreplacement))
 		end
 	else
 		if not editable then
 			return
 		end
 		-- do not continue if the text limit has been reached or exceeded
-		if utf8.len(text) >= self.limit and self.limit ~= 0 and not alltextselected then
+		if loveframes.utf8.len(text) >= self.limit and self.limit ~= 0 and not alltextselected then
 			return
 		end
 		-- check for unusable characters
@@ -811,11 +809,11 @@ function newobject:RunKey(key, istext)
 			lines = self.lines
 			line = self.line
 		end
-		if indicatornum ~= 0 and indicatornum ~= utf8.len(text) then
+		if indicatornum ~= 0 and indicatornum ~= loveframes.utf8.len(text) then
 			text = self:AddIntoText(key, indicatornum)
 			lines[line] = text
 			self:MoveIndicator(1)
-		elseif indicatornum == utf8.len(text) then
+		elseif indicatornum == loveframes.utf8.len(text) then
 			text = text .. key
 			lines[line] = text
 			self:MoveIndicator(1)
@@ -874,8 +872,8 @@ function newobject:MoveIndicator(num, exact)
 		self.indicatornum = num
 	end
 	
-	if self.indicatornum > utf8.len(text) then
-		self.indicatornum = utf8.len(text)
+	if self.indicatornum > loveframes.utf8.len(text) then
+		self.indicatornum = loveframes.utf8.len(text)
 	elseif self.indicatornum < 0 then
 		self.indicatornum = 0
 	end
@@ -934,7 +932,7 @@ function newobject:UpdateIndicator()
 	else
 		if indicatornum == 0 then
 			width = 0
-		elseif indicatornum >= utf8.len(text) then
+		elseif indicatornum >= loveframes.utf8.len(text) then
 			width = font:getWidth(text)
 		else
 			width = font:getWidth(loveframes.utf8.sub(text, 1, indicatornum))
@@ -1086,7 +1084,7 @@ function newobject:GetTextCollisions(x, y)
 			end
 			local line = self.line
 			local curline = lines[line]
-			for i=1, utf8.len(curline) do
+			for i=1, loveframes.utf8.len(curline) do
 				local char = loveframes.utf8.sub(text, i, i)
 				local width = 0
 				if masked then
@@ -1106,7 +1104,7 @@ function newobject:GetTextCollisions(x, y)
 					self:MoveIndicator(i - 1, true)
 					break
 				else
-					self.indicatornum = utf8.len(curline)
+					self.indicatornum = loveframes.utf8.len(curline)
 				end
 				
 				if x < tx then
@@ -1114,19 +1112,19 @@ function newobject:GetTextCollisions(x, y)
 				end
 				
 				if x > (tx + width) then
-					self:MoveIndicator(utf8.len(curline), true)
+					self:MoveIndicator(loveframes.utf8.len(curline), true)
 				end
 			end
 			
-			if utf8.len(curline) == 0 then
+			if loveframes.utf8.len(curline) == 0 then
 				self.indicatornum = 0
 			end
 		end
 	else
 		local i = 0
-		for p, c in utf8.codes(text) do
+		for p, c in loveframes.utf8.codes(text) do
 			i = i + 1
-			local char = utf8.char(c)
+			local char = loveframes.utf8.char(c)
 			local width = 0
 			if masked then
 				local maskchar = self.maskchar
@@ -1147,7 +1145,7 @@ function newobject:GetTextCollisions(x, y)
 				self:MoveIndicator(0, true)
 			end
 			if x > (tx + width) then
-				self:MoveIndicator(utf8.len(text), true)
+				self:MoveIndicator(loveframes.utf8.len(text), true)
 			end
 		end
 	end
@@ -1377,13 +1375,13 @@ function newobject:SetText(text)
 			self.lines = {""}
 		end
 		self.line = #self.lines
-		self.indicatornum = utf8.len(self.lines[#self.lines])
+		self.indicatornum = loveframes.utf8.len(self.lines[#self.lines])
 	else
 		text = loveframes.utf8.gsub(text, string.char(92) .. string.char(110), "")
 		text = loveframes.utf8.gsub(text, string.char(10), "")
 		self.lines = {text}
 		self.line = 1
-		self.indicatornum = utf8.len(text)
+		self.indicatornum = loveframes.utf8.len(text)
 	end
 	
 	return self
@@ -1899,12 +1897,12 @@ function newobject:Paste()
 	
 	if limit > 0 then
 		local curtext = self:GetText()
-		local curlength = utf8.len(curtext)
+		local curlength = loveframes.utf8.len(curtext)
 		if curlength == limit then
 			return
 		else
 			local inputlimit = limit - curlength
-			if utf8.len(text) > inputlimit then
+			if loveframes.utf8.len(text) > inputlimit then
 				text = loveframes.utf8.sub(text, 1, inputlimit)
 			end
 		end
@@ -1949,7 +1947,7 @@ function newobject:Paste()
 						table.insert(oldlinedata, lines[line])
 						lines[line] = part
 						if i == numparts then
-							self.indicatornum = utf8.len(part)
+							self.indicatornum = loveframes.utf8.len(part)
 							lines[line] = lines[line] .. last
 							self.line = line
 						end
@@ -1969,7 +1967,7 @@ function newobject:Paste()
 				text = loveframes.utf8.gsub(text, string.char(10), " ")
 				text = loveframes.utf8.gsub(text, string.char(13), " ")
 				text = loveframes.utf8.gsub(text, string.char(9), tabreplacement)
-				local length = utf8.len(text)
+				local length = loveframes.utf8.len(text)
 				local new = first .. text .. last
 				lines[line] = new
 				self.indicatornum = indicatornum + length
@@ -1981,7 +1979,7 @@ function newobject:Paste()
 			text = loveframes.utf8.gsub(text, string.char(10), " ")
 			text = loveframes.utf8.gsub(text, string.char(13), " ")
 			text = loveframes.utf8.gsub(text, string.char(9), tabreplacement)
-			local length = utf8.len(text)
+			local length = loveframes.utf8.len(text)
 			local linetext = lines[1]
 			local part1 = loveframes.utf8.sub(linetext, 1, indicatornum)
 			local part2 = loveframes.utf8.sub(linetext, indicatornum + 1)
