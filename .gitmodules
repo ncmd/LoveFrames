@@ -1,3 +1,0 @@
-[submodule "loveframes/third-party/utf8"]
-	path = loveframes/third-party/utf8
-	url = https://github.com/Stepets/utf8.lua.git
