@@ -13,7 +13,8 @@ local matchers = {
     return [[
   add(function(ctx) -- toend
     ctx.result.finish = ctx.pos - 1
-    if ctx.pos == #ctx.str + 1 then ctx:done() end
+    ctx.modified = true
+    if ctx.pos == utf8len(ctx.str) + 1 then ctx:done() end
   end)
 ]]
   end,

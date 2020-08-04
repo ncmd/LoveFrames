@@ -1,5 +1,8 @@
 local module_path = ...
 module_path = module_path:match("^(.-)init$") or (module_path .. '.')
+
+local ffi_enabled, ffi = pcall(require, 'ffi')
+
 local utf8 = {
   config = {},
   default = {
@@ -15,7 +18,14 @@ local utf8 = {
         __mode = 'kv'
       }),
     },
-    locale = "C.UTF-8",
+    locale = nil,
+    int32array = function(size)
+      if ffi_enabled then
+        return ffi.new("uint32_t[?]", size + 1)
+      else
+        return {}
+      end
+    end
   },
   regex = {
     compiletime = {
