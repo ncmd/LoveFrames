@@ -191,6 +191,27 @@ function newobject:GetText()
 end
 
 --[[---------------------------------------------------------
+	- func: SetFont(font)
+	- desc: sets the object's font, nil uses the skin's default
+--]]---------------------------------------------------------
+function newobject:SetFont(font)
+
+	self.font = font
+	return self
+	
+end
+
+--[[---------------------------------------------------------
+	- func: GetFont()
+	- desc: gets the object's font
+--]]---------------------------------------------------------
+function newobject:GetFont()
+
+	return self.font
+	
+end
+
+--[[---------------------------------------------------------
 	- func: SetClickable(bool)
 	- desc: sets whether the object can be clicked or not
 --]]---------------------------------------------------------

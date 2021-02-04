@@ -172,7 +172,7 @@ function skin.button(object)
 	local height = object:GetHeight()
 	local hover = object:GetHover()
 	local text = object:GetText()
-	local font = skin.controls.smallfont
+	local font = object:GetFont() or skin.controls.smallfont
 	local twidth = font:getWidth(object.text)
 	local theight = font:getHeight(object.text)
 	local down = object:GetDown()
@@ -344,7 +344,7 @@ function skin.imagebutton(object)
 	local image = object:GetImage()
 	local imagecolor = object.imagecolor or skin.controls.color_image
 	local down = object.down
-	local font = skin.controls.imagebuttonfont
+	local font = object:GetFont() or skin.controls.imagebuttonfont
 	local twidth = font:getWidth(object.text)
 	local theight = font:getHeight(object.text)
 	local checked = object.checked
