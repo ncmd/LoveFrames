@@ -28,8 +28,18 @@ function example.func(loveframes, centerarea)
 	frame:SetHeight(text:GetHeight() + 65)
 	frame:SetState("newstate")
 	
+	loveframes.SetStateOnOpenCallback("newstate", stateOnOpen)
+	loveframes.SetStateOnCloseCallback("newstate", stateOnClose)
+	
 	loveframes.SetState("newstate")
 	
+end
+
+stateOnClose = function(currentState, newState)
+	print("Closing "..currentState.." before opening "..newState)
+end
+stateOnOpen = function(currentState, oldState)
+	print("Opening "..currentState.." after closing "..oldState)
 end
 
 return example
