@@ -984,7 +984,7 @@ end
 	- func: SetRowsFont(font)
 	- desc: sets the font of the rows.
 --]]---------------------------------------------------------
-function newobject:SetAllRowsFont(font)
+function newobject:SetRowsFont(font)
 	local list = self.internals[1]
   for k, v in ipairs(list.children) do
     v:SetFont(font)
