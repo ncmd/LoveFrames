@@ -26,8 +26,11 @@ function newobject:initialize()
 	self.toggleable = false
 	self.toggle = false
 	self.OnClick = nil
+	self.OnMouseOver = nil
+	self.OnMouseOut = nil
 	self.groupIndex = 0
 	self.checked = false
+	self.mouseover = false
 	
 	self:SetDrawFunc()
 end
@@ -57,18 +60,27 @@ function newobject:update(dt)
 	self:CheckHover()
 	
 	local hover = self.hover
-	local down = self.down
 	local downobject = loveframes.downobject
 	local parent = self.parent
 	local base = loveframes.base
 	local update = self.Update
+	local onmouseover = self.OnMouseOver
+	local onmouseout = self.OnMouseOut
 	
 	if not hover then
 		self.down = false
 		if downobject == self then
 			self.hover = true
 		end
+		if onmouseout and self.mouseover then
+			onmouseout(self)
+			self.mouseover = false
+		end
 	else
+		if onmouseover and not self.mouseover then
+			onmouseover(self)
+			self.mouseover = true
+		end
 		if downobject == self then
 			self.down = true
 		end
@@ -76,8 +88,8 @@ function newobject:update(dt)
 	
 	-- move to parent if there is a parent
 	if parent ~= base then
-		self.x = self.parent.x + self.staticx
-		self.y = self.parent.y + self.staticy
+		self.x = self.parent.x + self.staticx - (parent.offsetx or 0)
+		self.y = self.parent.y + self.staticy - (parent.offsety or 0)
 	end
 	
 	if update then
@@ -107,7 +119,7 @@ function newobject:mousepressed(x, y, button)
 	
 	local hover = self.hover
 	
-	if hover and button == 1 then
+	if hover then
 		local baseparent = self:GetBaseParent()
 		if baseparent and baseparent.type == "frame" then
 			baseparent:MakeTop()
@@ -116,6 +128,7 @@ function newobject:mousepressed(x, y, button)
 		loveframes.downobject = self
 	end
 	
+	self.pressed_button = button
 end
 
 --[[---------------------------------------------------------
@@ -143,7 +156,7 @@ function newobject:mousereleased(x, y, button)
 	local enabled = self.enabled
 	local onclick = self.OnClick
 	
-	if hover and down and clickable and button == 1 then
+	if hover and down and clickable and self.pressed_button == button then
 		if enabled then
 			if self.groupIndex ~= 0 then
 				local baseparent = self.parent
@@ -159,7 +172,7 @@ function newobject:mousereleased(x, y, button)
 				self.checked = true
 			end
 			if onclick then
-				onclick(self, x, y)
+				onclick(self, x, y, self.pressed_button)
 			end
 			if self.toggleable then
 				local ontoggle = self.OnToggle
@@ -170,7 +183,7 @@ function newobject:mousereleased(x, y, button)
 			end
 		end
 	end
-	
+
 	self.down = false
 
 end

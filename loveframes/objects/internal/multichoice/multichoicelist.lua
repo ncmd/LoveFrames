@@ -341,7 +341,7 @@ function newobject:CalculateSize()
 	if self.itemheight > height then
 		self.extraheight = self.itemheight - height
 		if not vbar then
-			local scroll = loveframes.objects["scrollbody"]:new(self, "vertical")
+			local scroll = loveframes.objects["scrollbody"]:new(self, "vertical", true)
 			table.insert(self.internals, scroll)
 			self.vbar = true
 		end

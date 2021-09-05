@@ -66,8 +66,8 @@ function newobject:update(dt)
 	
 	-- move to parent if there is a parent
 	if parent ~= base then
-		self.x = self.parent.x + self.staticx
-		self.y = self.parent.y + self.staticy
+		self.x = self.parent.x + self.staticx - (parent.offsetx or 0)
+		self.y = self.parent.y + self.staticy - (parent.offsety or 0)
 	end
 	
 	self.itemwidth = 0
@@ -92,7 +92,7 @@ function newobject:update(dt)
 	
 	if self.itemheight > self.height then
 		if not self.vbar then
-			local scrollbody = loveframes.objects["scrollbody"]:new(self, "vertical")
+			local scrollbody = loveframes.objects["scrollbody"]:new(self, "vertical", true)
 			table.insert(self.internals, scrollbody)
 			self.vbar = true
 			if self.hbar then
@@ -119,7 +119,7 @@ function newobject:update(dt)
 	
 	if self.itemwidth > self.width then
 		if not self.hbar then
-			local scrollbody = loveframes.objects["scrollbody"]:new(self, "horizontal")
+			local scrollbody = loveframes.objects["scrollbody"]:new(self, "horizontal", true)
 			table.insert(self.internals, scrollbody)
 			self.hbar = true
 			if self.vbar then
@@ -174,6 +174,8 @@ function newobject:draw()
 		stencilfunc = function() love.graphics.rectangle("fill", self.x, self.y, self.width, self.height - 16) end
 	elseif self.vbar and self.hbar then
 		stencilfunc = function() love.graphics.rectangle("fill", self.x, self.y, self.width - 16, self.height - 16) end
+	else
+		stencilfunc = function() love.graphics.rectangle("fill", self.x, self.y, self.width, self.height) end
 	end
 	
 	self:SetDrawOrder()

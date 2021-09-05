@@ -797,7 +797,7 @@ function newobject:CheckHover()
 	local visible = self.visible
 	local type = self.type
 	local hoverobject = loveframes.hoverobject
-	
+
 	-- check if the mouse is colliding with the object
 	if state == curstate and visible then
 		local collide = self.collide
@@ -820,7 +820,7 @@ function newobject:CheckHover()
 	end
 	
 	-- check if the object is being hovered
-	if hoverobject == self and type ~= "base" then
+	if selfcol and hoverobject == self and type ~= "base" then
 		self.hover = true
 	else
 		self.hover = false
@@ -1066,13 +1066,29 @@ end
 
 --[[---------------------------------------------------------
 	- func: SetAlwaysUpdate(bool)
-	- desc: sets the object's skin
+	- desc: sets the object will always update
 --]]---------------------------------------------------------
 function newobject:SetAlwaysUpdate(bool)
 
+	local children = self.children
+	local internals = self.internals
+	
 	self.alwaysupdate = bool
-	return self
 
+	if children then
+		for k, v in ipairs(children) do
+			v:SetAlwaysUpdate(bool)
+		end
+	end
+	
+	if internals then
+		for k, v in ipairs(internals) do
+			v:SetAlwaysUpdate(bool)
+		end
+	end
+	
+	return self
+	
 end
 
 --[[---------------------------------------------------------
