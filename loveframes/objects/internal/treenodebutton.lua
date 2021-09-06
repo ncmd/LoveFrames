@@ -98,8 +98,8 @@ function newobject:mousepressed(x, y, button)
 			end
 		end
 		self.parent:SetOpen(bool)
-		print("!")
-		print(self.parent.level)
+		--print("!")
+		--print(self.parent.level)
 	end
 	
 end

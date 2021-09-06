@@ -183,7 +183,7 @@ function newobject:update(dt)
 		local itemheight = self.itemheight
 		if itemheight > height then
 			if not vbar then
-				local scrollbody = loveframes.objects["scrollbody"]:new(self, "vertical", true)
+				local scrollbody = loveframes.objects["scrollbody"]:new(self, "vertical")
 				scrollbody.internals[1].internals[1].autoscroll = self.autoscroll
 				table.insert(self.internals, scrollbody)
 				self.vbar = true
@@ -211,7 +211,7 @@ function newobject:update(dt)
 		
 		if itemwidth > width then
 			if not hbar then
-				local scrollbody = loveframes.objects["scrollbody"]:new(self, "horizontal", true)
+				local scrollbody = loveframes.objects["scrollbody"]:new(self, "horizontal")
 				scrollbody.internals[1].internals[1].autoscroll = self.autoscroll
 				table.insert(self.internals, scrollbody)
 				self.hbar = true

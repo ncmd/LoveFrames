@@ -28,7 +28,6 @@ function newobject:initialize()
 	self.OnClick = nil
 	self.groupIndex = 0
 	self.checked = false
-	self.mouseover = false
 	
 	self:SetDrawFunc()
 end
@@ -62,8 +61,6 @@ function newobject:update(dt)
 	local parent = self.parent
 	local base = loveframes.base
 	local update = self.Update
-	local onmouseover = self.OnMouseOver
-	local onmouseout = self.OnMouseOut
 	
 	if not hover then
 		self.down = false
