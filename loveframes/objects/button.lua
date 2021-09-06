@@ -26,8 +26,6 @@ function newobject:initialize()
 	self.toggleable = false
 	self.toggle = false
 	self.OnClick = nil
-	self.OnMouseOver = nil
-	self.OnMouseOut = nil
 	self.groupIndex = 0
 	self.checked = false
 	self.mouseover = false
@@ -72,15 +70,7 @@ function newobject:update(dt)
 		if downobject == self then
 			self.hover = true
 		end
-		if onmouseout and self.mouseover then
-			onmouseout(self)
-			self.mouseover = false
-		end
 	else
-		if onmouseover and not self.mouseover then
-			onmouseover(self)
-			self.mouseover = true
-		end
 		if downobject == self then
 			self.down = true
 		end
