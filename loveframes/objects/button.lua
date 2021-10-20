@@ -111,8 +111,10 @@ function newobject:mousepressed(x, y, button)
 		if baseparent and baseparent.type == "frame" then
 			baseparent:MakeTop()
 		end
-		self.down = true
-		loveframes.downobject = self
+		if button == 1 then
+			self.down = true
+			loveframes.downobject = self
+		end
 	end
 	
 	self.pressed_button = button
