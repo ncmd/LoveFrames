@@ -853,7 +853,7 @@ function skin.multichoice(object)
 		skin.PrintText(choice, x + 5, y + height/2 - theight/2)
 	end
 	
-	love.graphics.draw(image, x + width - 20, y + 5)
+	love.graphics.draw(image, x + width - 20, y + (height - 16) / 2)
 	
 	love.graphics.setColor(border)
 	skin.OutlinedRectangle(x, y, width, height)
@@ -1540,8 +1540,6 @@ function skin.grid(object)
 	local skin = object:GetSkin()
 	local x = object:GetX()
 	local y = object:GetY()
-	local width = object:GetWidth()
-	local height = object:GetHeight()
 	
 	--love.graphics.setColor(colors.hl4)
 	--love.graphics.rectangle("fill", x-1, y-1, width+2, height+2)
@@ -1551,24 +1549,37 @@ function skin.grid(object)
 	local cw = object.cellwidth + (object.cellpadding * 2)
 	local ch = object.cellheight + (object.cellpadding * 2)
 	
-	for i=1, object.rows do
-		for n=1, object.columns do
-			local ovt = false
-			local ovl = false
-			if i > 1 then
-				ovt = true
+	local row = 1
+	while row <= object.rows do
+		local col = 1
+		while col <= object.columns do
+			local cs = (object.colspans[col] or {})[row] or 1
+			local rs = (object.rowspans[col] or {})[row] or 1
+
+			if rs ~= -1 and cs ~= -1 then
+				local ovt = false
+				local ovl = false
+				if row > 1 then
+					ovt = true
+				end
+				if col > 1 then
+					ovl = true
+				end
+
+				local x = cx + (col - 1) * cw
+				local y = cy + (row - 1) * ch
+				local w = cw * cs
+				local h = ch * rs
+
+				love.graphics.setColor(skin.controls.color_back1)
+				love.graphics.rectangle("fill", x, y, w, h)
+				love.graphics.setColor(skin.controls.color_back3)
+				skin.OutlinedRectangle(x, y, w, h, ovt, false, ovl, false)
 			end
-			if n > 1 then	
-				ovl = true
-			end
-			love.graphics.setColor(skin.controls.color_back1)
-			love.graphics.rectangle("fill", cx, cy, cw, ch)
-			love.graphics.setColor(skin.controls.color_back3)
-			skin.OutlinedRectangle(cx, cy, cw, ch, ovt, false, ovl, false)
-			cx = cx + cw
+			col = col + 1
+
 		end
-		cx = x
-		cy = cy + ch
+		row = row + 1
 	end
 
 end
@@ -1723,15 +1734,18 @@ function skin.treenodebutton(object)
 	local leftpadding = 15 * object.parent.level
 	local image
 	
+	local fore = skin.controls.color_fore0
+	if object.parent.tree.selectednode == object.parent then
+		fore = {1, 1, 1, 1}
+	end
 	if object.parent.open then
 		image = skin.images["tree-node-button-close.png"]
 	else
 		image = skin.images["tree-node-button-open.png"]
 	end
-	
 	--image:setFilter("nearest", "nearest")
-	
-	love.graphics.setColor(skin.controls.color_image)
+	love.graphics.setColor(fore)
+	--love.graphics.setColor(skin.controls.color_image)
 	love.graphics.draw(image, object.x, object.y)
 	
 	object:SetPos(2 + leftpadding, 3)

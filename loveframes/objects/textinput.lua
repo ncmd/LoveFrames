@@ -567,7 +567,6 @@ function newobject:RunKey(key, istext)
 	local numlines = #lines
 	local curline = lines[line]
 	local text = curline
-	local ckey = ""
 	local font = self.font
 	local swidth = self.width
 	local textoffsetx = self.textoffsetx
@@ -663,14 +662,14 @@ function newobject:RunKey(key, istext)
 		
 		-- key input checking system
 		if key == "backspace" then
-			ckey = key
 			if alltextselected then
 				self:Clear()
 				self.alltextselected = false
 				indicatornum = self.indicatornum
 			else
+				local removed_text = ''
 				if text ~= "" and indicatornum ~= 0 then
-					text = self:RemoveFromText(indicatornum)
+					text, removed_text = self:RemoveFromText(indicatornum)
 					self:MoveIndicator(-1)
 					lines[line] = text
 				end
@@ -693,9 +692,9 @@ function newobject:RunKey(key, istext)
 				local cwidth = 0
 				if masked then
 					local maskchar = self.maskchar
-					cwidth = font:getWidth(loveframes.utf8.gsub(text, ".", maskchar))
+					cwidth = font:getWidth(loveframes.utf8.gsub(removed_text, ".", maskchar))
 				else
-					cwidth = font:getWidth(text)
+					cwidth = font:getWidth(removed_text)
 				end
 				if self.offsetx > 0 then
 					self.offsetx = self.offsetx - cwidth
@@ -707,7 +706,6 @@ function newobject:RunKey(key, istext)
 			if not editable then
 				return
 			end
-			ckey = key
 			if alltextselected then
 				self:Clear()
 				self.alltextselected = false
@@ -727,7 +725,6 @@ function newobject:RunKey(key, istext)
 				end
 			end
 		elseif key == "return" or key == "kpenter" then
-			ckey = key
 			-- call onenter if it exists
 			if onenter then
 				onenter(self, text)
@@ -765,7 +762,6 @@ function newobject:RunKey(key, istext)
 			if alltextselected then
 				return
 			end
-			ckey = key
 			self.lines[self.line] = self:AddIntoText(self.tabreplacement, self.indicatornum)
 			self:MoveIndicator(loveframes.utf8.len(self.tabreplacement))
 		end
@@ -1031,9 +1027,10 @@ function newobject:RemoveFromText(p)
 	local curline = lines[line]
 	local text = curline
 	local part1 = loveframes.utf8.sub(text, 1, p - 1)
+	local removed_part = loveframes.utf8.sub(text, p, p + 1)
 	local part2 = loveframes.utf8.sub(text, p + 1)
 	local new = part1 .. part2
-	return new
+	return new, removed_part
 	
 end
 
