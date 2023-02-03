@@ -69,10 +69,9 @@ function newobject:update(dt)
 	
 	local prevwidth = self.prevwidth
 	local prevheight = self.prevheight
-		
-	self.width = (self.columns * self.cellwidth) + (self.columns * (self.cellpadding * 2))
-	self.height = (self.rows * self.cellheight) + (self.rows * (self.cellpadding * 2))
-	
+
+	self:CalculateSize()	
+
 	if self.width ~= prevwidth or self.height ~= prevheight then
 		local onsizechanged = self.OnSizeChanged
 		self.prevwidth = self.width
@@ -90,6 +89,15 @@ function newobject:update(dt)
 	local update = self.Update
 	if update then update(self, dt) end
 
+end
+
+--[[---------------------------------------------------------
+	- func: CalculateSize()
+	- desc: calculate the object size
+--]]---------------------------------------------------------
+function newobject:CalculateSize()
+	self.width = (self.columns * self.cellwidth) + (self.columns * (self.cellpadding * 2))
+	self.height = (self.rows * self.cellheight) + (self.rows * (self.cellpadding * 2))
 end
 
 function newobject:_update_children_position()

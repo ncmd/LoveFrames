@@ -412,6 +412,7 @@ function newobject:Center()
 	local base = loveframes.base
 	local parent = self.parent
 	
+	if self.CalculateSize then self:CalculateSize() end
 	if parent == base then
 		local width = love.graphics.getWidth()
 		local height = love.graphics.getHeight()
