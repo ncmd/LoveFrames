@@ -13,13 +13,13 @@ function example.func(loveframes, centerarea)
 	numberbox:SetPos(5, 30)
 	numberbox:SetSize(200, 25)
 	
-  local togglebutton = loveframes.Create("button", frame)
-  togglebutton:SetPos(5, 60)
-  togglebutton:SetWidth(200)
-  togglebutton:SetText("Toggle Padding")
-  togglebutton.OnClick = function(object)
-    numberbox:SetPad(not numberbox:GetPad())
-  end
+	local togglebutton = loveframes.Create("button", frame)
+	togglebutton:SetPos(5, 60)
+	togglebutton:SetWidth(200)
+	togglebutton:SetText("Toggle Padding")
+	togglebutton.OnClick = function(object)
+		numberbox:SetPad(not numberbox:GetPad())
+	end
 end
 
 return example

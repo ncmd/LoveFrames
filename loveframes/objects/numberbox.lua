@@ -28,7 +28,7 @@ function newobject:initialize()
 	self.internal = false
 	self.canmodify = false
 	self.lastbuttonclicked = false
-  self.pad = false
+	self.pad = false
 	self.internals = {}
 	self.OnValueChanged = nil
 	
@@ -61,9 +61,9 @@ function newobject:initialize()
 			end
 		end
 	end
-  input.OnFocusLost = function(object)
-    self:updateinput()
-  end
+	input.OnFocusLost = function(object)
+		self:updateinput()
+	end
 	input.Update = function(object)
 		object:SetSize(object.parent.width - 20, object.parent.height)
 	end
@@ -147,24 +147,24 @@ end
 
 function newobject:updateinput()
 
-  local value = self.value
-  if self.pad then
-    local maxabs = math.max(math.abs(self.min), math.abs(self.max))
-    -- A range from 0 to 0 would be unusual, but it would break the math.
-    if maxabs == 0 then maxabs = 1 end
-    local integralwidth = math.floor(math.log10(maxabs)) + 1
-    local width = integralwidth
-    if self.decimals > 0 then
-      width = width + self.decimals + 1
-    end
-    if value < 0 then
-      width = width + 1
-    end
-    local formatstring = string.format("%%0%d.%df", width, self.decimals)
-    value = string.format(formatstring, value)
-  end
-  local input = self.internals[1]
-  input:SetText(value)
+	local value = self.value
+	if self.pad then
+		local maxabs = math.max(math.abs(self.min), math.abs(self.max))
+		-- A range from 0 to 0 would be unusual, but it would break the math.
+		if maxabs == 0 then maxabs = 1 end
+		local integralwidth = math.floor(math.log10(maxabs)) + 1
+		local width = integralwidth
+		if self.decimals > 0 then
+			width = width + self.decimals + 1
+		end
+		if value < 0 then
+			width = width + 1
+		end
+		local formatstring = string.format("%%0%d.%df", width, self.decimals)
+		value = string.format(formatstring, value)
+	end
+	local input = self.internals[1]
+	input:SetText(value)
 
 end
 
@@ -339,7 +339,7 @@ function newobject:SetMax(max)
 			onvaluechanged(self, max)
 		end
 	end
-  self:updateinput()
+	self:updateinput()
 	
 	return self
 	
@@ -371,7 +371,7 @@ function newobject:SetMin(min)
 			onvaluechanged(self, min)
 		end
 	end
-  self:updateinput()
+	self:updateinput()
 	
 	return self
 	
@@ -400,7 +400,7 @@ function newobject:SetMinMax(min, max)
 	
 	if self.value > max then
 		self.value = max
-    self:updateinput()
+		self:updateinput()
 		if onvaluechanged then
 			onvaluechanged(self, max)
 		end
@@ -408,7 +408,7 @@ function newobject:SetMinMax(min, max)
 	
 	if self.value < min then
 		self.value = min
-    self:updateinput()
+		self:updateinput()
 		if onvaluechanged then
 			onvaluechanged(self, min)
 		end
@@ -484,7 +484,7 @@ end
 function newobject:SetDecimals(decimals)
 
 	self.decimals = decimals
-  self:updateinput()
+	self:updateinput()
 	return self
 	
 end
@@ -503,24 +503,24 @@ end
 --[[---------------------------------------------------------
 	- func: SetPad(decimals)
 	- desc: sets whether to pad the object's value
-      with zeroes
+			with zeroes
 --]]---------------------------------------------------------
 function newobject:SetPad(pad)
 
-  self.pad = pad
-  self:updateinput()
-  return self
+	self.pad = pad
+	self:updateinput()
+	return self
 
 end
 
 --[[---------------------------------------------------------
 	- func: GetPad()
 	- desc: gets whether to pad the object's value
-      with zeroes
+			with zeroes
 --]]---------------------------------------------------------
 function newobject:GetPad()
 
-  return self.pad
+	return self.pad
 
 end
 
